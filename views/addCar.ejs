@@ -1,0 +1,17 @@
+<form method="POST" action="/panel/service/car/specimen/add">
+     <select name="car">
+          <% for(let element of models){ %>
+          <option value="<%= element._id %>"><%=  element.manufacturer.name +" " + element.name %> </option>
+          <%}  %>
+     </select>
+     <input type="text" name="plate" placeholder="numer rejestracyjny">
+     <input type="number" name="productionYear" placeholder="rok produkcji">
+     <input type="text" name="engineSize" placeholder="pojemność silnika">
+     <input type="number" name="enginePower" placeholder="moc silnika">
+     <input type="text" name="color" placeholder="kolor">
+     <input type="submit" value="Dodaj">
+</form>
+
+<% if(typeof(message) !== 'undefined'){ %>
+<div><%= message %></div>
+<% } %>
