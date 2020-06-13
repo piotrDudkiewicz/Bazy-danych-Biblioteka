@@ -4,5 +4,10 @@
      <input type="text" name="name" placeholder="imię" />
      <input type="text" name="surname" placeholder="nazwisko" />
      <input type="password" name="password" placeholder="haslo" />
+     <input type="password" name="password2" placeholder="haslo" />
      <input type="submit" value="Zarejestruj się">
 </form>
+
+<% if(typeof(message) !== 'undefined'){ %>
+<div><%= message %></div>
+<% } %>

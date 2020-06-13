@@ -1,15 +1,28 @@
-<form method="POST" action="/panel/service/car/specimen/add">
+<form method="POST" action="<%= '/panel/service/car/specimen/'+loc %>">
+     <% if(typeof(car)!=='undefined'){ %>
+     <input type="hidden" name="specimenId" value="<%= car._id %>">
+     <% } %>
      <select name="car">
           <% for(let element of models){ %>
+          <% if(typeof(car)!=='undefined' && car.model == element.model){ %>
+          <option value="<%= element._id %>" selected><%=  element.manufacturer.name +" " + element.name %> </option>
+          <% }else{ %>
           <option value="<%= element._id %>"><%=  element.manufacturer.name +" " + element.name %> </option>
           <%}  %>
+          <%}  %>
      </select>
-     <input type="text" name="plate" placeholder="numer rejestracyjny">
-     <input type="number" name="productionYear" placeholder="rok produkcji">
-     <input type="text" name="engineSize" placeholder="pojemność silnika">
-     <input type="number" name="enginePower" placeholder="moc silnika">
-     <input type="text" name="color" placeholder="kolor">
-     <input type="submit" value="Dodaj">
+     <input type="text" name="plate" value="<%= typeof(car)!=='undefined'? car.plate : '' %>"
+          placeholder="numer rejestracyjny">
+     <input type="number" name="productionYear" value="<%= typeof(car)!=='undefined'? car.productionYear : '' %>"
+          placeholder="rok produkcji">
+     <input type="text" name="engineSize" value="<%= typeof(car)!=='undefined'? car.engineSize : '' %>"
+          placeholder="pojemność silnika">
+     <input type="number" name="enginePower" value="<%= typeof(car)!=='undefined'? car.enginePower : '' %>"
+          placeholder="moc silnika">
+     <input type="number" name="pricePerDay" value="<%= typeof(car)!=='undefined'? car.pricePerDay : '' %>"
+          placeholder="cena za dzień">
+     <input type="text" name="color" value="<%= typeof(car)!=='undefined'? car.color : '' %>" placeholder="kolor">
+     <input type="submit" value="<%= loc=="edit" ? 'Zaktualizuj' : 'Dodaj' %>">
 </form>
 
 <% if(typeof(message) !== 'undefined'){ %>

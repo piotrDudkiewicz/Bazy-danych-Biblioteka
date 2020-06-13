@@ -9,6 +9,11 @@ require("../config/passportConfig")(router);
 
 router.post('/register', function (req, res) {
 
+     if (req.body.password != req.body.password2) {
+          return res.render("register.ejs", {
+               message: "Hasła nie są takie same"
+          });
+     }
      const newUser = new user({
           login: req.body.login,
           name: req.body.name,
@@ -20,8 +25,16 @@ router.post('/register', function (req, res) {
 
      newUser.save().then(result => {
           res.redirect('/user/login');
-     }).catch(err => {
-          res.redirect('/user/register');
+     }).catch(e => {
+          if (e.message) {
+               res.render("register.ejs", {
+                    message: e.message
+               });
+          } else {
+               res.render("register.ejs", {
+                    message: "Coś poszło nie tak"
+               });
+          }
      });
 
 });
@@ -40,22 +53,22 @@ router.post('/login', async function (req, res, next) {
                return next(err);
           }
           if (!user) {
-               res.redirect('/user/login');
+               return res.render('login.ejs', {
+                    message: "Błędne dane"
+               });
           }
           req.logIn(user, function (err) {
-               res.redirect('/home');
+               return res.redirect('/home');
           });
      })(req, res, next);
 });
 
-router.post("/logout", async function (req, res) {
+router.get("/logout", async function (req, res) {
      try {
           req.logOut();
-          res.status(200).json({
-               message: "Success"
-          });
+          res.redirect("/home");
      } catch (err) {
-          res.status(500).json(err);
+          res.redirect("/home");
      }
 })
 

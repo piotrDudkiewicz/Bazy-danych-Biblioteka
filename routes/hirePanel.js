@@ -3,6 +3,7 @@ const router = express.Router();
 const car = require('../models/car');
 const user = require('../models/users');
 const hire = require('../models/carHire');
+const allModels = require('../config/lib');
 
 router.get('/add', (req, res) => {
      res.render('addHire.ejs');
@@ -62,4 +63,60 @@ router.post('/add', async (req, res) => {
      }
 });
 
+router.get('/getAll', async (req, res) => {
+     let manufacturerList, modelList;
+     try {
+
+          manufacturerList = await allModels.manufacturers();
+
+          if (req.query.manufacturer) {
+               modelList = await allModels.models(req.query.manufacturer);
+          }
+
+          const aggregateOption = await allModels.hiresAggregate(req);
+          const hires = await hire.aggregate(aggregateOption);
+
+          res.render('getHireList.ejs', {
+               hires: hires,
+               manufacturers: manufacturerList,
+               models: modelList,
+               manufacturers: manufacturerList,
+               manufacturer: req.query.manufacturer,
+               model: req.query.model,
+               type: "service"
+          });
+
+
+     } catch (e) {
+          res.render('getHireList.ejs', {
+               message: "Coś poszło nie tak",
+               manufacturers: manufacturerList,
+               models: modelList,
+               manufacturer: req.query.manufacturer,
+               model: req.query.model
+          });
+     }
+});
+
+router.get('/end/:id', async (req, res) => {
+     try {
+          let hireTemp = await hire.updateOne({
+               _id: req.params.id
+          }, {
+               status: 'zakonczone'
+          });
+
+          hireTemp = await hire.findOne({
+               _id: req.params.id
+          });
+
+          res.render('getHireList.ejs', {
+               message: "Do zapłaty: " + hireTemp.price
+          });
+     } catch (e) {
+          res.render('getHireList.ejs', {
+               message: "Coś poszło nie tak "
+          });
+     }
+});
 module.exports = router;

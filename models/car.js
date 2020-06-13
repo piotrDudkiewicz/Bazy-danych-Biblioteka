@@ -40,7 +40,17 @@ const schemaCar = new mongoose.Schema({
           type: Number,
           required: true,
           min: 1900
+     },
+     pricePerDay: {
+          type: Number,
+          min: 20,
+          required: true
      }
+
+});
+
+schemaCar.path('plate').set(function (value) {
+     return value.toUpperCase();
 
 });
 
