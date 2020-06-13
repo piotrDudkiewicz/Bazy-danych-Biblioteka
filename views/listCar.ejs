@@ -1,0 +1,47 @@
+<form method="GET" action="">
+     <select name="manufacturer">
+          <option value="">Dowolna marka</option>
+          <% for(let element of manufacturers){ %>
+          <% if(element._id == manufacturer){ %>
+          <option value="<%= element._id %>" selected><%= element.name %> </option>
+          <% }else{ %>
+          <option value="<%= element._id %>"><%= element.name %> </option>
+          <% } %>
+          <%}  %>
+     </select>
+     <% if(typeof(models)!== 'undefined'){ %>
+     <select name="model">
+          <option value="">Dowolny model</option>
+          <% for(let element of models){ %>
+          <% if(element._id == model){ %>
+          <option value="<%= element._id %>" selected><%= element.name %> </option>
+          <% }else{ %>
+          <option value="<%= element._id %>"><%= element.name %> </option>
+          <% } %>
+          <%}  %>
+     </select>
+     <% } %>
+     <input type="number" name="powerFrom" placeholder="moc od">
+     <input type="number" name="powerTo" placeholder="moc do">
+     <input type="number" name="priceFrom" placeholder="cena od">
+     <input type="number" name="priceTo" placeholder="cena do">
+     <select name="sortOption">
+          <option value="">Wybierz sortowanie</option>
+          <option value="0">Rosnąco po cenie</option>
+          <option value="1">Malejąco po cenie</option>
+          <option value="2">Rosnąco po mocy</option>
+          <option value="3">Malejąco po mocy</option>
+     </select>
+     <input type="submit" value="ok">
+</form>
+<% if(cars !== null){ %>
+<% for(let car of cars){%>
+
+<div>
+     <%= `${car.manufacturer.name} ${car.model.name} ${car.enginePower} ${car.engineSize} ${car.productionYear} ${car.color} ${car.pricePerDay}` %>
+     <% if(edit!=false){%>
+     <a href="<%= '/panel/service/car/specimen/edit/'+car._id %>">Edit</a>
+     <%}%>
+</div>
+<% } %>
+     <% } %>

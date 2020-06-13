@@ -1,0 +1,10 @@
+<form method="POST" action="/panel/service/hire/add">
+     <input type="text" name="plate" placeholder="numer rejestracyjny">
+     <input type="text" name="user" placeholder="login użytkownika">
+     <input type="date" name="date" placeholder="liczba dni">
+     <input type="submit" value="Dodaj">
+</form>
+
+<% if(typeof(message) !== 'undefined'){ %>
+<div><%= message %></div>
+<% } %>

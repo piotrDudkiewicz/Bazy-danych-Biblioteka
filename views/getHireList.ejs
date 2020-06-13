@@ -1,0 +1,66 @@
+<form method="GET" action="">
+     <input type="search" name="plate" place="Numer rejestracyjny">
+     <select name="manufacturer">
+          <option value="">Dowolna marka</option>
+          <% for(let element of manufacturers){ %>
+          <% if(element._id == manufacturer){ %>
+          <option value="<%= element._id %>" selected><%= element.name %> </option>
+          <% }else{ %>
+          <option value="<%= element._id %>"><%= element.name %> </option>
+          <% } %>
+          <%}  %>
+     </select>
+     <% if(typeof(models)!== 'undefined'){ %>
+     <select name="model">
+          <option value="">Dowolny model</option>
+          <% for(let element of models){ %>
+          <% if(element._id == model){ %>
+          <option value="<%= element._id %>" selected><%= element.name %> </option>
+          <% }else{ %>
+          <option value="<%= element._id %>"><%= element.name %> </option>
+          <% } %>
+          <%}  %>
+     </select>
+     <% } %>
+     <select name="status">
+          <option value="">wybierz status</option>
+          <option value="aktywne">aktywne</option>
+          <option value="zakonczone">zakonczone</option>
+     </select>
+     <input type="date" name="dateFrom" placeholder="Data rozpoczęcia od">
+     <input type="date" name="dateTo" placeholder="Data rozpoczęcia do">
+     <input type="number" name="priceFrom" placeholder="Cena od">
+     <input type="number" name="priceTo" placeholder="Cena do">
+     <select name="sortOption">
+          <option value="">Wybierz sortowanie</option>
+          <option value="0">Rosnąco po cenie</option>
+          <option value="1">Malejąco po cenie</option>
+          <option value="2">Rosnąco po dacie rozpoczęcia</option>
+          <option value="3">Malejąco po dacie rozpoczęcia</option>
+     </select>
+     <input type="submit" value="Szukaj">
+</form>
+
+
+<% if(typeof(message) !== 'undefined'){ %>
+<div><%= message %></div>
+<% } %>
+
+<% if(typeof(hires) !== 'undefined'){ %>
+<% for(let hire of hires){%>
+<div>
+     <%= `${hire.userOn.login} | ${hire.manufacturer.name} | ${hire.model.name} | ${hire.carSpecimen.plate} | ${hire.startDate.toDateString()} | ${hire.plannedDate.toDateString()  } | ${hire.carSpecimen.pricePerDay} |` %>
+     <% if(hire.endDate){ %>
+     <%= hire.endDate.toDateString() %>
+     <% } %>
+     <% if(hire.price){ %>
+     <%= hire.price %>
+     <% } %>
+     <%= hire.status %>
+     <% if(hire.status!="zakonczone" && type=="service"){%>
+     <a href="<%= '/panel/service/hire/end/'+hire._id %>">Zakończ</a>
+     <%}%>
+</div>
+
+<% } %>
+     <% } %>
