@@ -7,6 +7,7 @@ const hire = require('../models/carHire');
 const allModels = require('../config/lib');
 const ObjectId = require('mongoose').Types.ObjectId;
 
+
 router.use(async function (req, res, next) {
      try {
           if (req.isAuthenticated()) {
@@ -24,16 +25,29 @@ router.use(async function (req, res, next) {
 });
 
 router.get("/home", (req, res) => {
-     res.render("home.ejs");
+     res.render("home.ejs", {
+      page:'Home',
+      menuId:'home',
+      isLoggedIn: req.isAuthenticated(),
+      userType: req.user.type
+   });
 });
 
 router.get('/panel', (req, res) => {
      switch (req.body.type) {
           case "client":
-               res.render('clientPanel.ejs');
+               res.render("clientPanel.ejs", {
+                 page:'Panel klienta',
+                 menuId:'clientPanel',
+                 isLoggedIn: req.isAuthenticated()
+               });
                break;
           case "service":
-               res.render('servicePanel.ejs');
+               res.render('servicePanel.ejs', {
+                 page:'Panel administratora',
+                 menuId:'servicePanel',
+                 isLoggedIn: req.isAuthenticated()
+               });
                break;
           default:
                res.redirect('/home');
@@ -182,7 +196,10 @@ router.get('/list', async (req, res) => {
                models: modelList,
                manufacturer: req.query.manufacturer,
                model: req.query.model,
-               edit: req.body.type == "service" ? true : false
+               edit: req.body.type == "service" ? true : false,
+               page:'Lista samochodów',
+               menuId:'listCar',
+               isLoggedIn: req.isAuthenticated()
           });
      } catch (e) {
           res.render('listCar.ejs', {
@@ -191,6 +208,9 @@ router.get('/list', async (req, res) => {
                models: modelList,
                manufacturer: req.query.manufacturer,
                model: req.query.model,
+               page:'Lista samochodów',
+               menuId:'listCar',
+               isLoggedIn: req.isAuthenticated()
           });
      }
 
@@ -216,7 +236,10 @@ router.get('/panel/client/hire/getAll', async (req, res) => {
                manufacturers: manufacturerList,
                manufacturer: req.query.manufacturer,
                model: req.query.model,
-               type: 'client'
+               type: 'client',
+               page:'Lista wypożyczeń',
+               menuId:'hireList',
+               isLoggedIn: req.isAuthenticated()
           });
 
 
@@ -227,7 +250,10 @@ router.get('/panel/client/hire/getAll', async (req, res) => {
                manufacturers: manufacturerList,
                models: modelList,
                manufacturer: req.query.manufacturer,
-               model: req.query.model
+               model: req.query.model,
+               page:'Lista wypożyczeń',
+               menuId:'hireList',
+               isLoggedIn: req.isAuthenticated()
           });
      }
 });

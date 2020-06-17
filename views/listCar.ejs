@@ -1,47 +1,90 @@
 <form method="GET" action="">
-     <select name="manufacturer">
-          <option value="">Dowolna marka</option>
-          <% for(let element of manufacturers){ %>
+  <div class="form-group row">
+    <div class="col">
+      <select class="form-control" name="manufacturer">
+        <option value="">Dowolna marka</option>
+        <% for(let element of manufacturers){ %>
           <% if(element._id == manufacturer){ %>
-          <option value="<%= element._id %>" selected><%= element.name %> </option>
-          <% }else{ %>
-          <option value="<%= element._id %>"><%= element.name %> </option>
-          <% } %>
-          <%}  %>
-     </select>
-     <% if(typeof(models)!== 'undefined'){ %>
-     <select name="model">
-          <option value="">Dowolny model</option>
-          <% for(let element of models){ %>
-          <% if(element._id == model){ %>
-          <option value="<%= element._id %>" selected><%= element.name %> </option>
-          <% }else{ %>
-          <option value="<%= element._id %>"><%= element.name %> </option>
-          <% } %>
-          <%}  %>
-     </select>
-     <% } %>
-     <input type="number" name="powerFrom" placeholder="moc od">
-     <input type="number" name="powerTo" placeholder="moc do">
-     <input type="number" name="priceFrom" placeholder="cena od">
-     <input type="number" name="priceTo" placeholder="cena do">
-     <select name="sortOption">
-          <option value="">Wybierz sortowanie</option>
-          <option value="0">Rosnąco po cenie</option>
-          <option value="1">Malejąco po cenie</option>
-          <option value="2">Rosnąco po mocy</option>
-          <option value="3">Malejąco po mocy</option>
-     </select>
-     <input type="submit" value="ok">
-</form>
-<% if(cars !== null){ %>
-<% for(let car of cars){%>
-
-<div>
-     <%= `${car.manufacturer.name} ${car.model.name} ${car.enginePower} ${car.engineSize} ${car.productionYear} ${car.color} ${car.pricePerDay}` %>
-     <% if(edit!=false){%>
-     <a href="<%= '/panel/service/car/specimen/edit/'+car._id %>">Edit</a>
-     <%}%>
-</div>
-<% } %>
-     <% } %>
+            <option value="<%= element._id %>" selected><%= element.name %> </option>
+            <% }else{ %>
+              <option value="<%= element._id %>"><%= element.name %> </option>
+              <% } %>
+              <%}  %>
+            </select>
+          </div>
+          <% if(typeof(models)!== 'undefined'){ %>
+            <div class="col">
+              <select class="form-control" name="model">
+                <option value="">Dowolny model</option>
+                <% for(let element of models){ %>
+                  <% if(element._id == model){ %>
+                    <option value="<%= element._id %>" selected><%= element.name %> </option>
+                    <% }else{ %>
+                      <option value="<%= element._id %>"><%= element.name %> </option>
+                      <% } %>
+                      <%}  %>
+                    </select>
+                  </div>
+                  <% } %>
+                </div>
+                <div class="form-group row">
+                  <div class="col">
+                    <input class="form-control" type="number" name="powerFrom" placeholder="moc od">
+                  </div>
+                  <div class="col">
+                    <input class="form-control" type="number" name="powerTo" placeholder="moc do">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col">
+                    <input class="form-control" type="number" name="priceFrom" placeholder="cena od">
+                  </div>
+                  <div class="col">
+                    <input class="form-control" type="number" name="priceTo" placeholder="cena do">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col">
+                    <select class="form-control" name="sortOption">
+                      <option value="">Wybierz sortowanie</option>
+                      <option value="0">Rosnąco po cenie</option>
+                      <option value="1">Malejąco po cenie</option>
+                      <option value="2">Rosnąco po mocy</option>
+                      <option value="3">Malejąco po mocy</option>
+                    </select>
+                  </div><div class="col">
+                    <button class="btn btn-primary" type="submit">Sortuj</button>
+                  </div>
+                </div>
+              </form>
+              <% if(cars !== null){ %>
+                <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Marka</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Moc silnika</th>
+                    <th scope="col">Pojemność</th>
+                    <th scope="col">Data produkcji</th>
+                    <th scope="col">Kolor</th>
+                    <th scope="col">Cena za dzień</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <% for(let car of cars){ %>
+                  <tr>
+                  <td><%= car.manufacturer.name %></td>
+                  <td><%= car.model.name %></td>
+                  <td><%= car.enginePower %></td>
+                  <td><%= car.engineSize %></td>
+                  <td><%= car.productionYear %></td>
+                  <td><%= car.color %></td>
+                  <td><%= car.pricePerDay %></td>
+                  <td><% if(edit!=false){%>
+                      <a href="<%= '/panel/service/car/specimen/edit/'+car._id %>">Edit</a> <% } %></td>
+                      </tr>
+                    <% } %>
+                    </tbody>
+                    </table>
+                    <% } %>

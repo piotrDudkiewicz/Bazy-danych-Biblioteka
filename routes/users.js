@@ -5,13 +5,14 @@ const user = require('../models/users');
 
 require("../config/passportConfig")(router);
 
-
-
 router.post('/register', function (req, res) {
 
      if (req.body.password != req.body.password2) {
           return res.render("register.ejs", {
-               message: "Hasła nie są takie same"
+               message: "Hasła nie są takie same",
+               page:'Rejestracja',
+               menuId:'register',
+               isLoggedIn: req.isAuthenticated()
           });
      }
      const newUser = new user({
@@ -28,11 +29,17 @@ router.post('/register', function (req, res) {
      }).catch(e => {
           if (e.message) {
                res.render("register.ejs", {
-                    message: e.message
+                    message: e.message,
+                    page:'Rejestracja',
+                    menuId:'register',
+                    isLoggedIn: req.isAuthenticated()
                });
           } else {
                res.render("register.ejs", {
-                    message: "Coś poszło nie tak"
+                    message: "Coś poszło nie tak",
+                    page:'Rejestracja',
+                    menuId:'register',
+                    isLoggedIn: req.isAuthenticated()
                });
           }
      });
@@ -40,11 +47,19 @@ router.post('/register', function (req, res) {
 });
 
 router.get("/login", (req, res) => {
-     res.render("login.ejs");
+     res.render("login.ejs", {
+       page:'Logowanie',
+       menuId:'login',
+       isLoggedIn: req.isAuthenticated()
+     });
 });
 
 router.get("/register", (req, res) => {
-     res.render("register.ejs");
+     res.render("register.ejs", {
+       page:'Rejestracja',
+       menuId:'register',
+       isLoggedIn: req.isAuthenticated()
+     });
 });
 
 router.post('/login', async function (req, res, next) {
@@ -54,7 +69,8 @@ router.post('/login', async function (req, res, next) {
           }
           if (!user) {
                return res.render('login.ejs', {
-                    message: "Błędne dane"
+                    message: "Błędne dane", page:'Logowanie', menuId:'login',
+                    isLoggedIn: req.isAuthenticated()
                });
           }
           req.logIn(user, function (err) {

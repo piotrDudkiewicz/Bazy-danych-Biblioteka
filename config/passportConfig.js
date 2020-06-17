@@ -12,7 +12,7 @@ const authenticateUser = async (username, password, done) => {
                     if (result)
                          return done(null, userTemp);
                     return done(null, false, {
-                         message: 'haslo incorrect'
+                         message: 'Incorrect password'
                     });
                }).catch((err) => {
                     throw err;

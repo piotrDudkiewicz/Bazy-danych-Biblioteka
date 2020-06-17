@@ -1,8 +1,17 @@
-<h3>Dodaj pojazd</h3>
+<h3>Dodaj nowy model lub markę</h3><br>
 <form action="/panel/service/car/model/add" method="POST">
-     <input type="text" name="manu" placeholder="Marka" />
-     <input type="text" name="model" placeholder="Model" />
-     <input type="submit" value="Dodaj">
+
+     <div class="form-group row">
+       <input class="form-control" type="text" name="manu" placeholder="Marka" />
+     </div>
+
+     <div class="form-group row">
+       <input class="form-control" type="text" name="model" placeholder="Model" />
+     </div>
+
+     <div class="form-group row">
+       <button class="btn btn-primary" type="submit">Dodaj</button>
+     </div>
 </form>
 
 <% if(typeof(message) !== 'undefined'){ %>

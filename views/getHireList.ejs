@@ -1,6 +1,11 @@
+<h3>Aktualne wypożyczenia</h3><br>
 <form method="GET" action="">
-     <input type="search" name="plate" place="Numer rejestracyjny">
-     <select name="manufacturer">
+  <div class="form-group row">
+    <div class="col">
+     <input class="form-control" type="search" name="plate" placeholder="Numer rejestracyjny">
+     </div>
+     <div class="col">
+     <select class="form-control" name="manufacturer">
           <option value="">Dowolna marka</option>
           <% for(let element of manufacturers){ %>
           <% if(element._id == manufacturer){ %>
@@ -10,8 +15,10 @@
           <% } %>
           <%}  %>
      </select>
+     </div>
      <% if(typeof(models)!== 'undefined'){ %>
-     <select name="model">
+     <div class="col">
+     <select class="form-control" name="model">
           <option value="">Dowolny model</option>
           <% for(let element of models){ %>
           <% if(element._id == model){ %>
@@ -21,24 +28,46 @@
           <% } %>
           <%}  %>
      </select>
+     </div>
      <% } %>
-     <select name="status">
+     </div>
+     <div class="form-group row">
+    <div class="col">
+     <select class="form-control" name="status">
           <option value="">wybierz status</option>
           <option value="aktywne">aktywne</option>
           <option value="zakonczone">zakonczone</option>
      </select>
-     <input type="date" name="dateFrom" placeholder="Data rozpoczęcia od">
-     <input type="date" name="dateTo" placeholder="Data rozpoczęcia do">
-     <input type="number" name="priceFrom" placeholder="Cena od">
-     <input type="number" name="priceTo" placeholder="Cena do">
-     <select name="sortOption">
+     </div>
+   <div class="col">
+     <input class="form-control" type="date" name="dateFrom">
+     </div>
+     <div class="col">
+     <input class="form-control" type="date" name="dateTo">
+     </div>
+     </div>
+     <div class="form-group row">
+     <div class="col">
+     <input class="form-control" type="number" name="priceFrom" placeholder="Cena od">
+     </div>
+     <div class="col">
+     <input class="form-control" type="number" name="priceTo" placeholder="Cena do">
+     </div>
+     <div class="col">
+     <select class="form-control" name="sortOption">
           <option value="">Wybierz sortowanie</option>
           <option value="0">Rosnąco po cenie</option>
           <option value="1">Malejąco po cenie</option>
           <option value="2">Rosnąco po dacie rozpoczęcia</option>
           <option value="3">Malejąco po dacie rozpoczęcia</option>
      </select>
-     <input type="submit" value="Szukaj">
+     </div>
+     </div>
+     <div class="form-group row">
+       <div class="col">
+     <button class="btn btn-primary" type="submit">Szukaj</button>
+     </div>
+    </div>
 </form>
 
 
@@ -47,20 +76,37 @@
 <% } %>
 
 <% if(typeof(hires) !== 'undefined'){ %>
-<% for(let hire of hires){%>
-<div>
-     <%= `${hire.userOn.login} | ${hire.manufacturer.name} | ${hire.model.name} | ${hire.carSpecimen.plate} | ${hire.startDate.toDateString()} | ${hire.plannedDate.toDateString()  } | ${hire.carSpecimen.pricePerDay} |` %>
-     <% if(hire.endDate){ %>
-     <%= hire.endDate.toDateString() %>
-     <% } %>
-     <% if(hire.price){ %>
-     <%= hire.price %>
-     <% } %>
-     <%= hire.status %>
-     <% if(hire.status!="zakonczone" && type=="service"){%>
-     <a href="<%= '/panel/service/hire/end/'+hire._id %>">Zakończ</a>
-     <%}%>
-</div>
+  <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Login</th>
+      <th scope="col">Marka</th>
+      <th scope="col">Model</th>
+      <th scope="col">Rejestracja</th>
+      <th scope="col">Data wyp.</th>
+      <th scope="col">Data zwr.</th>
+      <th scope="col">Data zak.</th>
+      <th scope="col">Cena</th>
+      <th scope="col">Do zapłaty</th>
+      <th scope="col"></th>
 
+    </tr>
+  </thead>
+  <tbody>
+
+<% for(var hire of hires){%>
+   <td><%= hire.userOn.login %></td>
+   <td><%= hire.manufacturer.name %></td>
+   <td><%= hire.model.name %></td>
+   <td><%= hire.carSpecimen.plate %></td>
+   <td><%= hire.startDate.toDateString() %></td>
+   <td><%= hire.plannedDate.toDateString() %></td>
+   <td><% if(hire.endDate){ %> <%= hire.endDate.toDateString() %> <% } %></td>
+   <td><%= hire.carSpecimen.pricePerDay %></td>
+   <td><% if(hire.price){ %> <%= hire.price %><% } else { %> <%= hire.status %> <% } %></td>
+   <td><% if(hire.status!="zakonczone" && type=="service"){%>
+     <a href="<%= '/panel/service/hire/end/'+hire._id %>">Zakończ</a><% } %></td>
+  <%}%>
+</tbody>
+</table>
 <% } %>
-     <% } %>

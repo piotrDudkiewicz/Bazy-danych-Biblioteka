@@ -1,0 +1,26 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <%- include ('../partials/head'); -%>
+    <link rel="stylesheet" href="./style.css">
+  </head>
+  <body style="padding-top: 5rem;">
+    <%- include ('../partials/menu'); -%>
+
+    <main role="main" class="container">
+      <div class="content">
+        <div class="row">
+        <div class="col-sm-1">
+        </div>
+        <div class="col">
+          <%- body -%>
+        </div>
+        <div class="col-sm-1">
+        </div>
+      </div>
+      </div>
+
+    </main><!-- /.container -->
+    <%- include ('../partials/script'); -%>
+  </body>
+</html>

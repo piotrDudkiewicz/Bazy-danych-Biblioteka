@@ -17,7 +17,7 @@ const schemaUser = new mongoose.Schema({
                     const reg = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$");
                     return reg.test(value);
                },
-               message: 'email is bad'
+               message: 'Incorrect e-mail format. Format must be like example@mail.com'
           }
      },
      name: {
@@ -36,10 +36,10 @@ const schemaUser = new mongoose.Schema({
           type: String,
           validate: {
                validator: function (value) {
-                    const reg = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*.])(?=.{8,})");
+                    const reg = new RegExp(".{8,32}");
                     return reg.test(value);
                },
-               message: 'Password is bad'
+               message: 'Password must be 8-32 characters long'
           },
           required: true
      },

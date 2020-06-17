@@ -6,7 +6,11 @@ const car = require('../models/car');
 const allModels = require('../config/lib');
 
 router.get("/model/add", (req, res) => {
-     res.render("addModel.ejs");
+     res.render("addModel.ejs",{
+     page:'Dodaj model',
+     menuId:'addModel',
+     isLoggedIn: req.isAuthenticated()
+   });
 });
 
 router.post("/model/add", async (req, res) => {
@@ -36,22 +40,34 @@ router.post("/model/add", async (req, res) => {
                });
                await manu.save();
                res.render("addModel.ejs", {
-                    message: "Dodano"
-               })
+                    message: "Dodano",
+                    page:'Dodaj model',
+                    menuId:'addModel',
+                    isLoggedIn: req.isAuthenticated()
+               });
           } else {
                res.render("addModel.ejs", {
-                    message: "Ten pojazd już istnieje"
-               })
+                    message: "Ten pojazd już istnieje",
+                    page:'Dodaj model',
+                    menuId:'addModel',
+                    isLoggedIn: req.isAuthenticated()
+               });
           }
 
      } catch (e) {
           if (e.message) {
                res.render("addModel.ejs", {
-                    message: e.message
+                    message: e.message,
+                    page:'Dodaj model',
+                    menuId:'addModel',
+                    isLoggedIn: req.isAuthenticated()
                });
           } else {
                res.render("addModel.ejs", {
-                    message: "Coś poszło nie tak"
+                    message: "Coś poszło nie tak",
+                    page:'Dodaj model',
+                    menuId:'addModel',
+                    isLoggedIn: req.isAuthenticated()
                });
           }
 
@@ -64,7 +80,10 @@ router.get('/specimen/add', async (req, res) => {
 
      res.render('addCar.ejs', {
           models: modelList,
-          loc: 'add'
+          loc: 'add',
+          page:'Dodaj model',
+          menuId:'addModel',
+          isLoggedIn: req.isAuthenticated()
      });
 });
 
@@ -86,7 +105,10 @@ router.post('/specimen/add', async (req, res) => {
           res.render("addCar.ejs", {
                message: "Dodano",
                models: modelList,
-               loc: 'add'
+               loc: 'add',
+               page:'Dodaj model',
+               menuId:'addModel',
+               isLoggedIn: req.isAuthenticated()
           });
      } catch (e) {
 
@@ -94,13 +116,19 @@ router.post('/specimen/add', async (req, res) => {
                res.render("addCar.ejs", {
                     message: e.message,
                     models: modelList,
-                    loc: 'add'
+                    loc: 'add',
+                    page:'Dodaj model',
+                    menuId:'addModel',
+                    isLoggedIn: req.isAuthenticated()
                });
           } else {
                res.render("addCar.ejs", {
                     message: "Coś poszło nie tak",
                     models: modelList,
-                    loc: 'add'
+                    loc: 'add',
+                    page:'Dodaj model',
+                    menuId:'addModel',
+                    isLoggedIn: req.isAuthenticated()
                });
           }
      }
@@ -114,14 +142,20 @@ router.get('/specimen/edit/:id', async (req, res) => {
           res.render("addCar.ejs", {
                models: modelList,
                loc: 'edit',
-               car: carSpecimen
+               car: carSpecimen,
+               page:'Edytuj model',
+               menuId:'edit',
+               isLoggedIn: req.isAuthenticated()
           });
      } catch (e) {
           res.render("addCar.ejs", {
                models: modelList,
                loc: 'edit',
                car: carSpecimen,
-               message: "Coś poszło nie tak"
+               message: "Coś poszło nie tak",
+               page:'Edytuj model',
+               menuId:'edit',
+               isLoggedIn: req.isAuthenticated()
           });
      }
 
@@ -151,7 +185,10 @@ router.post('/specimen/edit/', async (req, res) => {
                models: modelList,
                loc: 'edit',
                car: carSpecimen,
-               message: "Zaktualizowano"
+               message: "Zaktualizowano",
+               page:'Edytuj model',
+               menuId:'editModel',
+               isLoggedIn: req.isAuthenticated()
           });
      } catch (e) {
           console.log(e)
@@ -160,14 +197,20 @@ router.post('/specimen/edit/', async (req, res) => {
                     message: e.message,
                     car: carSpecimen,
                     models: modelList,
-                    loc: 'edit'
+                    loc: 'edit',
+                    page:'Edytuj model',
+                    menuId:'editModel',
+                    isLoggedIn: req.isAuthenticated()
                });
           }
           res.render("addCar.ejs", {
                message: "Coś poszło nie tak",
                models: modelList,
                car: carSpecimen,
-               loc: 'edit'
+               loc: 'edit',
+               page:'Edytuj model',
+               menuId:'editModel',
+               isLoggedIn: req.isAuthenticated()
           });
 
      }

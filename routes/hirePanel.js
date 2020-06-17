@@ -5,15 +5,23 @@ const user = require('../models/users');
 const hire = require('../models/carHire');
 const allModels = require('../config/lib');
 
+
 router.get('/add', (req, res) => {
-     res.render('addHire.ejs');
+     res.render('addHire.ejs', {
+     page:'Wypożyczanie samochodu',
+     menuId:'addHire',
+     isLoggedIn: req.isAuthenticated()
+   });
 });
 
 router.post('/add', async (req, res) => {
 
      if (new Date(req.body.date) <= new Date() || req.body.date == null)
           return res.render('addHire.ejs', {
-               message: "Popraw datę"
+               message: "Popraw datę",
+               page:'Wypożyczanie samochodu',
+               menuId:'addHire',
+               isLoggedIn: req.isAuthenticated()
           });
 
      try {
@@ -33,11 +41,17 @@ router.post('/add', async (req, res) => {
 
                if (userTemp == null) {
                     res.render('addHire.ejs', {
-                         message: "Nie ma takiego użytkownika"
+                         message: "Nie ma takiego użytkownika",
+                         page:'Wypożyczanie samochodu',
+                         menuId:'addHire',
+                         isLoggedIn: req.isAuthenticated()
                     });
                } else if (carTemp == null) {
                     res.render('addHire.ejs', {
-                         message: "Nie ma takiego samochodu"
+                         message: "Nie ma takiego samochodu",
+                         page:'Wypożyczanie samochodu',
+                         menuId:'addHire',
+                         isLoggedIn: req.isAuthenticated()
                     });
                } else {
                     const newHire = new hire({
@@ -47,18 +61,27 @@ router.post('/add', async (req, res) => {
                     });
                     await newHire.save();
                     res.render('addHire.ejs', {
-                         message: "Dodano"
+                         message: "Dodano",
+                         page:'Wypożyczanie samochodu',
+                         menuId:'addHire',
+                         isLoggedIn: req.isAuthenticated()
                     });
                }
           } else {
                res.render('addHire.ejs', {
-                    message: "Ten samochód jest wypożyczony."
+                    message: "Ten samochód jest wypożyczony.",
+                    page:'Wypożyczanie samochodu',
+                    menuId:'addHire',
+                    isLoggedIn: req.isAuthenticated()
                });
           }
 
      } catch (e) {
           res.render('addHire.ejs', {
-               message: e
+               message: e,
+               page:'Wypożyczanie samochodu',
+               menuId:'addHire',
+               isLoggedIn: req.isAuthenticated()
           });
      }
 });
@@ -83,7 +106,10 @@ router.get('/getAll', async (req, res) => {
                manufacturers: manufacturerList,
                manufacturer: req.query.manufacturer,
                model: req.query.model,
-               type: "service"
+               type: "service",
+               page:'Lista wypożyczeń',
+               menuId:'hireList',
+               isLoggedIn: req.isAuthenticated()
           });
 
 
@@ -93,7 +119,10 @@ router.get('/getAll', async (req, res) => {
                manufacturers: manufacturerList,
                models: modelList,
                manufacturer: req.query.manufacturer,
-               model: req.query.model
+               model: req.query.model,
+               page:'Lista wypożyczeń',
+               menuId:'hireList',
+               isLoggedIn: req.isAuthenticated()
           });
      }
 });
@@ -111,11 +140,17 @@ router.get('/end/:id', async (req, res) => {
           });
 
           res.render('getHireList.ejs', {
-               message: "Do zapłaty: " + hireTemp.price
+               message: "Do zapłaty: " + hireTemp.price,
+               page:'Lista wypożyczeń',
+               menuId:'hireList',
+               isLoggedIn: req.isAuthenticated()
           });
      } catch (e) {
           res.render('getHireList.ejs', {
-               message: "Coś poszło nie tak "
+               message: "Coś poszło nie tak ",
+               page:'Lista wypożyczeń',
+               menuId:'hireList',
+               isLoggedIn: req.isAuthenticated()
           });
      }
 });
