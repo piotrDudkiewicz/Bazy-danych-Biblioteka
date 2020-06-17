@@ -3,42 +3,45 @@
      <% if(typeof(car)!=='undefined'){ %>
      <input type="hidden" name="specimenId" value="<%= car._id %>">
      <% } %>
-    <div class="form-group row">
-       <select class="form-control" name="car">
-          <% for(let element of models){ %>
-          <% if(typeof(car)!=='undefined' && car.model == element.model){ %>
-          <option value="<%= element._id %>" selected><%=  element.manufacturer.name +" " + element.name %> </option>
-          <% }else{ %>
-          <option value="<%= element._id %>"><%=  element.manufacturer.name +" " + element.name %> </option>
-          <%}  %>
-          <%}  %>
-     </select>
+     <div class="form-group row">
+          <select class="form-control" name="car">
+               <% for(let element of models){ %>
+               <% if(typeof(car)!=='undefined' && car.model == element.model){ %>
+               <?= car.model  element.model ?>
+               <option value="<%= element._id %>" selected><%=  element.manufacturer.name +" " + element.name %>
+               </option>
+               <% }else{ %>
+               <option value="<%= element._id %>"><%=  element.manufacturer.name +" " + element.name %> </option>
+               <%}  %>
+               <%}  %>
+          </select>
      </div>
      <div class="form-group row">
-     <input class="form-control" type="text" name="plate" value="<%= typeof(car)!=='undefined'? car.plate : '' %>"
-          placeholder="numer rejestracyjny">
+          <input class="form-control" type="text" name="plate" value="<%= typeof(car)!=='undefined'? car.plate : '' %>"
+               placeholder="numer rejestracyjny">
      </div>
      <div class="form-group row">
-     <input class="form-control"type="number" name="productionYear" value="<%= typeof(car)!=='undefined'? car.productionYear : '' %>"
-          placeholder="rok produkcji">
-          </div>
-          <div class="form-group row">
-     <input class="form-control" type="text" name="engineSize" value="<%= typeof(car)!=='undefined'? car.engineSize : '' %>"
-          placeholder="pojemność silnika">
-          </div>
-          <div class="form-group row">
-     <input class="form-control" type="number" name="enginePower" value="<%= typeof(car)!=='undefined'? car.enginePower : '' %>"
-          placeholder="moc silnika">
-          </div>
-          <div class="form-group row">
-     <input class="form-control" type="number" name="pricePerDay" value="<%= typeof(car)!=='undefined'? car.pricePerDay : '' %>"
-          placeholder="cena za dzień">
-          </div>
-          <div class="form-group row">
-     <input class="form-control" type="text" name="color" value="<%= typeof(car)!=='undefined'? car.color : '' %>" placeholder="kolor">
+          <input class="form-control" type="number" name="productionYear"
+               value="<%= typeof(car)!=='undefined'? car.productionYear : '' %>" placeholder="rok produkcji">
      </div>
      <div class="form-group row">
-     <button class="btn btn-primary" type="submit"><%= loc=="edit" ? 'Zaktualizuj' : 'Dodaj' %></button>
+          <input class="form-control" type="text" name="engineSize"
+               value="<%= typeof(car)!=='undefined'? car.engineSize : '' %>" placeholder="pojemność silnika">
+     </div>
+     <div class="form-group row">
+          <input class="form-control" type="number" name="enginePower"
+               value="<%= typeof(car)!=='undefined'? car.enginePower : '' %>" placeholder="moc silnika">
+     </div>
+     <div class="form-group row">
+          <input class="form-control" type="number" name="pricePerDay"
+               value="<%= typeof(car)!=='undefined'? car.pricePerDay : '' %>" placeholder="cena za dzień">
+     </div>
+     <div class="form-group row">
+          <input class="form-control" type="text" name="color" value="<%= typeof(car)!=='undefined'? car.color : '' %>"
+               placeholder="kolor">
+     </div>
+     <div class="form-group row">
+          <button class="btn btn-primary" type="submit"><%= loc=="edit" ? 'Zaktualizuj' : 'Dodaj' %></button>
      </div>
 </form>
 
