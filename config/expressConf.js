@@ -8,16 +8,24 @@ const morgan = require('morgan');
 const session = require('express-session');
 
 const car = require('../models/car');
-menuItems: [
-    {id:'login', name:'Logowanie', uri:'/user/login'},
-    {id:'register', name:'Rejestracja', uri:'/user/register'}
-  ]
+
+menuItems: [{
+          id: 'login',
+          name: 'Logowanie',
+          uri: '/user/login'
+     },
+     {
+          id: 'register',
+          name: 'Rejestracja',
+          uri: '/user/register'
+     }
+]
 
 module.exports = function () {
      app = express();
 
      app.set('views', './views');
-	 app.set('view engine', 'ejs');
+     app.set('view engine', 'ejs');
 
 
      app.use(bodyParser.urlencoded({
@@ -26,7 +34,7 @@ module.exports = function () {
 
      app.use(bodyParser.json());
      app.use(morgan('combined'));
-	 app.use(expressLayouts);
+     app.use(expressLayouts);
 
 
      app.use(session({
@@ -41,9 +49,9 @@ module.exports = function () {
 
      app.get("/", (req, res) => {
           res.render('index.ejs', {
-            page:'Strona główna',
-            menuId:'home',
-            isLoggedIn: req.isAuthenticated()
+               page: 'Strona główna',
+               menuId: 'home',
+               isLoggedIn: req.isAuthenticated()
           });
      });
 
