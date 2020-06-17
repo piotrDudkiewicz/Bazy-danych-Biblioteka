@@ -6,7 +6,7 @@
     <div class="form-group row">
        <select class="form-control" name="car">
           <% for(let element of models){ %>
-          <% if(typeof(car)!=='undefined' && car.model == element.model){ %>
+          <% if(typeof(car)!=='undefined' && car.car == element.model){ %>
           <option value="<%= element._id %>" selected><%=  element.manufacturer.name +" " + element.name %> </option>
           <% }else{ %>
           <option value="<%= element._id %>"><%=  element.manufacturer.name +" " + element.name %> </option>
