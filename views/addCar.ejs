@@ -5,7 +5,7 @@
      <% } %>
      <div class="form-group row">
           <select class="form-control" name="car">
-               <?= car.model  element.model ?>
+               <?= car.model+" "+  element.model ?>
                <% for(let element of models){ %>
                <% if(typeof(car)!=='undefined' && car.model == element.model){ %>
                <option value="<%= element._id %>" selected><%=  element.manufacturer.name +" " + element.name %>
