@@ -4,8 +4,9 @@
      <input type="hidden" name="specimenId" value="<%= car._id %>">
      <% } %>
      <div class="form-group row">
+     <%= car.model+" "+  element.model %>
           <select class="form-control" name="car">
-               <?= car.model+" "+  element.model ?>
+              
                <% for(let element of models){ %>
                <% if(typeof(car)!=='undefined' && car.model == element.model){ %>
                <option value="<%= element._id %>" selected><%=  element.manufacturer.name +" " + element.name %>
